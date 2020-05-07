@@ -18,10 +18,10 @@ $ source bin/activate
 (Flask-CRUD-API) pip3 install -r requirements.txt
 ```
 
-#### Start the backend DB
+<!--#### Start the backend DB
 ```
 $ docker run --name mongodb -p 27017:27017 -d mongo:latest
-```
+```-->
 
 #### Run with
 ```
