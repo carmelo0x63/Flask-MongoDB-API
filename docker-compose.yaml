@@ -4,7 +4,17 @@ services:
     build: .
     ports:
       - "5000:5000"
+    depends_on:
+      - db 
+    networks:
+      - frontend
+      - backend
   db:
-    image: mongo:latest
+    image: mongo
     ports:
       - "27017:27017"
+    networks:
+      - backend
+networks:
+  frontend:
+  backend:
