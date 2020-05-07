@@ -8,7 +8,8 @@ from resources.movie import movies
 app = Flask(__name__)
 
 app.config['MONGODB_SETTINGS'] = {
-    'host': 'mongodb://localhost/movie-bag'
+#    'host': 'mongodb://localhost/movie-bag'
+    'host': 'mongodb://flask-crud-api_db_1/movie-bag'
 }
 
 initialize_db(app)
