@@ -1,4 +1,5 @@
 # Flask-CRUD-API/app.py
+# Modularized through Blueprints, routes have been moved to resources/movie.py
 
 from flask import Flask
 from database.db import initialize_db
