@@ -1,5 +1,5 @@
 # Flask-CRUD-API
-Flask-based API offering CRUD operations, backend DB is Mongodb
+Flask-based API offering CRUD operations, backend DB is MongoDB
 
 #### Setup
 Create a [virtual environment for Python](https://docs.python.org/3/library/venv.html) in the current directory
@@ -87,6 +87,6 @@ ____
 
 #### Resources
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/)
-- [Getting Started With Flask, A Python Microframework](https://scotch.io/tutorials/getting-started-with-flask-a-python-microframework)
+- [Build a CRUD Web App With Python and Flask - Part One](https://www.digitalocean.com/community/tutorials/build-a-crud-web-app-with-python-and-flask-part-one)
 - [Dockerize a Flask App](https://dev.to/riverfount/dockerize-a-flask-app-17ag)
 
