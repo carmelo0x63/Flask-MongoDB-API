@@ -18,7 +18,9 @@ $ source bin/activate
 (Flask-MongoDB-API) pip3 install -r requirements.txt
 ```
 
-### Run app.py from CLI
+____
+
+### Run `app.py` from CLI
 
 #### Manually start the backend DB
 ```
@@ -101,6 +103,7 @@ $ curl -H "Content-Type: application/json" -X GET http://127.0.0.1:5000/movies/5
 ____
 
 ### Docker-Compose
+
 #### Build
 file `Dockerfile`:
 ```
