@@ -1,7 +1,7 @@
-# Flask-CRUD-API
+# Flask-MongoDB-API
 Flask-based API offering CRUD operations, backend DB is MongoDB
 
-#### Setup
+### Setup
 Create a [virtual environment for Python](https://docs.python.org/3/library/venv.html) in the current directory
 ```
 $ python3 -m venv .
@@ -11,33 +11,57 @@ Activate the virtual environment and install any dependencies
 ```
 $ source bin/activate
 
-(Flask-CRUD-API) pip3 install --upgrade pip
+(Flask-MongoDB-API) pip3 install --upgrade pip
 
-(Flask-CRUD-API) pip3 install wheel
+(Flask-MongoDB-API) pip3 install wheel
 
-(Flask-CRUD-API) pip3 install -r requirements.txt
+(Flask-MongoDB-API) pip3 install -r requirements.txt
 ```
 
-<!--#### Start the backend DB
+### Run app.py from CLI
+
+#### Manually start the backend DB
 ```
 $ docker run --name mongodb -p 27017:27017 -d mongo:latest
-```-->
+```
+
+file: `app.py`
+```
+# Flask-MongoDB-API/app.py
+# Modularized through Blueprints, routes have been moved to resources/movie.py
+
+from flask import Flask
+from database.db import initialize_db
+from resources.movie import movies
+
+app = Flask(__name__)
+
+app.config['MONGODB_SETTINGS'] = {
+    'host': 'mongodb://localhost/movie-bag'
+}
+
+initialize_db(app)
+app.register_blueprint(movies)
+
+if __name__ == '__main__':
+    app.run()
+```
 
 #### Run with
 ```
-(Flask-CRUD-API) $ export FLASK_APP=app.py
+(Flask-MongoDB-API) $ export FLASK_APP=app.py
 
-(Flask-CRUD-API) $ flask run --host=0.0.0.0
+(Flask-MongoDB-API) $ flask run --host=0.0.0.0
 ```
-**NOTE**: the `--host=0.0.0.0` part is optional and is only meant to make the web server accessible from external hosts
+**NOTE**: the `--host=0.0.0.0` part is optional and is meant to make the web server accessible from external hosts. Use with caution!
 
 #### Exit with
 CTRL+C to stop the server, `deactivate` to quit the virtual environment
 
 #### Tests
-#### Create/POST
+##### Create/POST
 ```
-$ curl -H "Content-Type: application/json" --data '{"name": "The Dark Knight UPDATED", "casts": ["Christian Bale", "Heath Ledger", "Aaron Eckhart", "Michael Caine"], "genres": ["Action", "Crime", "Drama"]}' -X POST http://127.0.0.1:5000/movies
+$ curl -H "Content-Type: application/json" --data '{"name": "The Dark Knight", "casts": ["Christian Bale", "Heath Ledger", "Aaron Eckhart", "Michael Caine"], "genres": ["Action", "Crime"]}' -X POST http://127.0.0.1:5000/movies
 {"id":"5eb41dc4c2d65db25809b565"}
 
 $ curl -H "Content-Type: application/json" --data '{"name": "The Shawshank Redemption", "casts": ["Tim Robbins", "Morgan Freeman", "Bob Gunton", "William Sadler"], "genres": ["Drama"]}
@@ -56,10 +80,10 @@ $ curl -H "Content-Type: application/json" -X GET http://127.0.0.1:5000/movies
 
 ##### Update/PUT
 ```
-$ curl -H "Content-Type: application/json" --data '{"name": "The Dark Knight", "casts": ["Christian Bale", "Heath Ledger", "Aaron Eckhart", "Michael Caine"], "genres": ["Action", "Crime", "Drama"]}' -X PUT http://127.0.0.1:5000/movies/5eb41dc4c2d65db25809b565
+$ curl -H "Content-Type: application/json" --data '{"name": "The Dark Knight UPDATED", "casts": ["Christian Bale", "Heath Ledger", "Aaron Eckhart", "Michael Caine"], "genres": ["Action", "Crime", "Drama"]}' -X PUT http://127.0.0.1:5000/movies/5eb41dc4c2d65db25809b565
 
 $ curl -H "Content-Type: application/json" -X GET http://127.0.0.1:5000/movies/5eb41dc4c2d65db25809b565
-{"_id": {"$oid": "5eb41dc4c2d65db25809b565"}, "name": "The Dark Knight", "casts": ["Christian Bale", "Heath Ledger", "Aaron Eckhart", "Michael Caine"], "genres": ["Action", "Crime", "Drama"]}
+{"_id": {"$oid": "5eb41dc4c2d65db25809b565"}, "name": "The Dark Knight UPDATED", "casts": ["Christian Bale", "Heath Ledger", "Aaron Eckhart", "Michael Caine"], "genres": ["Action", "Crime", "Drama"]}
 ```
 
 ##### Delete/DELETE
@@ -76,17 +100,77 @@ $ curl -H "Content-Type: application/json" -X GET http://127.0.0.1:5000/movies/5
 
 ____
 
-#### Docker
+### Docker-Compose
+#### Build
+file `Dockerfile`:
 ```
-$ docker build -t <repo>/flask-crud-api:1.0 .
+FROM python:3-alpine3.13
+MAINTAINER "carmelo.califano@gmail.com"
 
-$ docker run -d --name flask-crud-api -p 5000:5000 <repo>/flask-crud-api:1.0
+#RUN apk add --no-cache curl
+WORKDIR /srv
+
+COPY app.py requirements.txt /srv/
+COPY database /srv/database/
+COPY resources /srv/resources/
+RUN pip3 install -r requirements.txt
+
+ENV FLASK_APP "/srv/app.py"
+EXPOSE 5000/tcp
+ENTRYPOINT ["flask", "run", "--host=0.0.0.0"]
 ```
 
+file `docker-compose.yaml`:
+```
+version: "3"
+services:
+  rest:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - frontend
+      - backend
+  db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+networks:
+  frontend:
+  backend:
+```
+
+**NOTE**: edit `app.py` as follows:
+```
+<     'host': 'mongodb://localhost/movie-bag'
+---
+>     'host': 'mongodb://flask-mongodb-api_db_1/movie-bag'
+```
+
+#### Run
+```
+$ docker-compose up -d
+Building rest
+Sending build context to Docker daemon  25.57MB
+...
+Successfully tagged flask-mongodb-api_rest:latest
+WARNING: Image for service rest was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
+Starting flask-mongodb-api_db_1 ... done
+Starting flask-mongodb-api_rest_1 ... done
+
+$ docker-compose ps
+          Name                       Command             State            Ports
+-----------------------------------------------------------------------------------------
+flask-mongodb-api_db_1     docker-entrypoint.sh mongod   Up      0.0.0.0:27017->27017/tcp
+flask-mongodb-api_rest_1   flask run --host=0.0.0.0      Up      0.0.0.0:5000->5000/tcp
+```
 ____
 
-#### Resources
+### Resources
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/)
-- [Build a CRUD Web App With Python and Flask - Part One](https://www.digitalocean.com/community/tutorials/build-a-crud-web-app-with-python-and-flask-part-one)
 - [Dockerize a Flask App](https://dev.to/riverfount/dockerize-a-flask-app-17ag)
 

@@ -1,4 +1,4 @@
-FROM python:3-alpine3.9
+FROM python:3-alpine3.13
 MAINTAINER "carmelo.califano@gmail.com"
 
 #RUN apk add --no-cache curl
