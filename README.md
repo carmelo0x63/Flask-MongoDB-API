@@ -20,7 +20,7 @@ $ source bin/activate
 
 ____
 
-### Run `app.py` from CLI
+### Option 1: run `app.py` from CLI
 
 #### Manually start the backend DB
 ```
@@ -102,7 +102,7 @@ $ curl -H "Content-Type: application/json" -X GET http://127.0.0.1:5000/movies/5
 
 ____
 
-### Docker-Compose
+### Option 2: Docker-Compose
 
 #### Build
 file `Dockerfile`:
@@ -176,4 +176,10 @@ ____
 ### Resources
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 - [Dockerize a Flask App](https://dev.to/riverfount/dockerize-a-flask-app-17ag)
-
+- [Setup & basic CRUD API](https://dev.to/paurakhsharma/flask-rest-api-part-0-setup-basic-crud-api-4650)
+- [Using MongoDB w/ Flask](https://dev.to/paurakhsharma/flask-rest-api-part-1-using-mongodb-with-flask-3g7d)
+- [Better structure with Blueprint and flask-restful](https://dev.to/paurakhsharma/flask-rest-api-part-2-better-structure-with-blueprint-and-flask-restful-2n93)
+- [Authentication and authorization](https://dev.to/paurakhsharma/flask-rest-api-part-3-authentication-and-authorization-5935)
+- [Exception handling](https://dev.to/paurakhsharma/flask-rest-api-part-4-exception-handling-5c6a)
+- [Password reset](https://dev.to/paurakhsharma/flask-rest-api-part-5-password-reset-2f2e)
+- [Testing REST API](https://dev.to/paurakhsharma/flask-rest-api-part-6-testing-rest-apis-4lla)
