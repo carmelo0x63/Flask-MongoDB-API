@@ -77,7 +77,7 @@ $ curl -H "Content-Type: application/json" --data '{"name": "The Godfather ", "c
 ##### Read/GET
 ```
 $ curl -H "Content-Type: application/json" -X GET http://127.0.0.1:5000/movies
-[{"_id": {"$oid": "5eb41dc4c2d65db25809b565"}, "name": "The Dark Knight UPDATED", "casts": ["Christian Bale", "Heath Ledger", "Aaron Eckhart", "Michael Caine"], "genres": ["Action", "Crime", "Drama"]}, {"_id": {"$oid": "5eb41edac2d65db25809b566"}, "name": "The Shawshank Redemption", "casts": ["Tim Robbins", "Morgan Freeman", "Bob Gunton", "William Sadler"], "genres": ["Drama"]}, {"_id": {"$oid": "5eb41eeac2d65db25809b567"}, "name": "The Godfather ", "casts": ["Marlon Brando", "Al Pacino", "James Caan", "Diane Keaton"], "genres": ["Crime", "Drama"]}]
+[{"_id": {"$oid": "605c9602ec1a1b84930c873e"}, "name": "The Dark Knight", "casts": ["Christian Bale", "Heath Ledger", "Aaron Eckhart", "Michael Caine"], "genres": ["Action", "Crime"]}, {"_id": {"$oid": "605c960dec1a1b84930c873f"}, "name": "The Shawshank Redemption", "casts": ["Tim Robbins", "Morgan Freeman", "Bob Gunton", "William Sadler"], "genres": ["Drama"]}, {"_id": {"$oid": "605c9617ec1a1b84930c8740"}, "name": "The Godfather ", "casts": ["Marlon Brando", "Al Pacino", "James Caan", "Diane Keaton"], "genres": ["Crime", "Drama"]}]
 ```
 
 ##### Update/PUT
