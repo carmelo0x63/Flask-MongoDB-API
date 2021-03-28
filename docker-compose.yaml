@@ -1,4 +1,5 @@
 version: "3"
+
 services:
   rest-api:
     container_name: api
@@ -18,9 +19,13 @@ services:
     networks:
       - backend
     volumes:
-      - mongodb_data:/data/db
+      - db_data:/data/db
+
 networks:
   frontend:
   backend:
+
 volumes:
-  mongodb_data:
+  db_data:
+#    external: true
+    name: mongodb_data

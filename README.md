@@ -124,6 +124,7 @@ ENTRYPOINT ["flask", "run", "--host=0.0.0.0"]
 file `docker-compose.yaml`:
 ```
 version: "3"
+
 services:
   rest-api:
     container_name: api
@@ -143,12 +144,15 @@ services:
     networks:
       - backend
     volumes:
-      - mongodb_data:/data/db
+      - db_data:/data/db
+
 networks:
   frontend:
   backend:
+
 volumes:
-  mongodb_data:
+  db_data:
+    name: mongodb_data
 ```
 
 **NOTE**: edit `app.py` as follows:
@@ -161,8 +165,9 @@ volumes:
 #### Run
 ```
 $ docker-compose up -d
+Creating volume "mongodb_data" with default driver
 Building rest-api
-Sending build context to Docker daemon  25.56MB
+Sending build context to Docker daemon  25.58MB
 ...
 Successfully tagged flask-mongodb-api_rest-api:latest
 WARNING: Image for service rest-api was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
@@ -178,21 +183,21 @@ db     docker-entrypoint.sh mongod   Up      0.0.0.0:27017->27017/tcp
 $ docker volume ls
 DRIVER    VOLUME NAME
 ...
-local     flask-mongodb-api_mongodb_data
+local     mongodb_data
 ...
 
-$  docker inspect flask-mongodb-api_mongodb_data
+$  docker inspect mongodb_data
 [
     {
-        "CreatedAt": "2021-03-28T15:37:08+02:00",
+        "CreatedAt": "2021-03-28T16:01:15+02:00",
         "Driver": "local",
         "Labels": {
             "com.docker.compose.project": "flask-mongodb-api",
             "com.docker.compose.version": "1.28.5",
             "com.docker.compose.volume": "mongodb_data"
         },
-        "Mountpoint": "/var/lib/docker/volumes/flask-mongodb-api_mongodb_data/_data",
-        "Name": "flask-mongodb-api_mongodb_data",
+        "Mountpoint": "/var/lib/docker/volumes/mongodb_data/_data",
+        "Name": "mongodb_data",
         "Options": null,
         "Scope": "local"
     }
