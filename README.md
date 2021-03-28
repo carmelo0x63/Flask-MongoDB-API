@@ -13,9 +13,7 @@ $ source bin/activate
 
 (Flask-MongoDB-API) pip3 install --upgrade pip
 
-(Flask-MongoDB-API) pip3 install wheel
-
-(Flask-MongoDB-API) pip3 install -r requirements.txt
+(Flask-MongoDB-API) pip3 install Flask flask-mongoengine wheel
 ```
 
 ____
@@ -127,49 +125,78 @@ file `docker-compose.yaml`:
 ```
 version: "3"
 services:
-  rest:
+  rest-api:
+    container_name: api
     build: .
     ports:
       - "5000:5000"
     depends_on:
-      - db
+      - mongo-db
     networks:
       - frontend
       - backend
-  db:
-    image: mongo
+  mongo-db:
+    container_name: db
+    image: mongo:latest
     ports:
       - "27017:27017"
     networks:
       - backend
+    volumes:
+      - mongodb_data:/data/db
 networks:
   frontend:
   backend:
+volumes:
+  mongodb_data:
 ```
 
 **NOTE**: edit `app.py` as follows:
 ```
 <     'host': 'mongodb://localhost/movie-bag'
 ---
->     'host': 'mongodb://flask-mongodb-api_db_1/movie-bag'
+>     'host': 'mongodb://db/movie-bag'
 ```
 
 #### Run
 ```
 $ docker-compose up -d
-Building rest
-Sending build context to Docker daemon  25.57MB
+Building rest-api
+Sending build context to Docker daemon  25.56MB
 ...
-Successfully tagged flask-mongodb-api_rest:latest
-WARNING: Image for service rest was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
-Starting flask-mongodb-api_db_1 ... done
-Starting flask-mongodb-api_rest_1 ... done
+Successfully tagged flask-mongodb-api_rest-api:latest
+WARNING: Image for service rest-api was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
+Creating db ... done
+Creating api ... done
 
 $ docker-compose ps
-          Name                       Command             State            Ports
------------------------------------------------------------------------------------------
-flask-mongodb-api_db_1     docker-entrypoint.sh mongod   Up      0.0.0.0:27017->27017/tcp
-flask-mongodb-api_rest_1   flask run --host=0.0.0.0      Up      0.0.0.0:5000->5000/tcp
+Name             Command             State            Ports
+---------------------------------------------------------------------
+api    flask run --host=0.0.0.0      Up      0.0.0.0:5000->5000/tcp
+db     docker-entrypoint.sh mongod   Up      0.0.0.0:27017->27017/tcp
+
+$ docker volume ls
+DRIVER    VOLUME NAME
+...
+local     flask-mongodb-api_mongodb_data
+...
+
+$  docker inspect flask-mongodb-api_mongodb_data
+[
+    {
+        "CreatedAt": "2021-03-28T15:37:08+02:00",
+        "Driver": "local",
+        "Labels": {
+            "com.docker.compose.project": "flask-mongodb-api",
+            "com.docker.compose.version": "1.28.5",
+            "com.docker.compose.volume": "mongodb_data"
+        },
+        "Mountpoint": "/var/lib/docker/volumes/flask-mongodb-api_mongodb_data/_data",
+        "Name": "flask-mongodb-api_mongodb_data",
+        "Options": null,
+        "Scope": "local"
+    }
+]
 ```
 ____
 

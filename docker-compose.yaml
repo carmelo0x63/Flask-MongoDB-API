@@ -6,7 +6,7 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - db 
+      - mongo-db 
     networks:
       - frontend
       - backend
