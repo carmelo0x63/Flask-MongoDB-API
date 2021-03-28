@@ -173,7 +173,10 @@ Successfully tagged flask-mongodb-api_rest-api:latest
 WARNING: Image for service rest-api was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
 Creating db ... done
 Creating api ... done
+```
 
+#### Monitor
+```
 $ docker-compose ps
 Name             Command             State            Ports
 ---------------------------------------------------------------------
@@ -203,6 +206,9 @@ $  docker inspect mongodb_data
     }
 ]
 ```
+
+**NOTE**: volume `mongodb_data` gets created automatically upon launching `docker-compose`.
+
 ____
 
 ### Resources
