@@ -1,7 +1,6 @@
 version: "3"
 services:
-  rest-api:
-    container_name: api
+  rest:
     build: .
     ports:
       - "5000:5000"
@@ -10,17 +9,12 @@ services:
     networks:
       - frontend
       - backend
-  mongo-db:
-    container_name: db
-    image: mongo:latest
+  db:
+    image: mongo
     ports:
       - "27017:27017"
     networks:
       - backend
-    volumes:
-      - mongodb_data:/data/db
 networks:
   frontend:
   backend:
-volumes:
-  mongodb_data:

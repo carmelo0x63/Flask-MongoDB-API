@@ -183,3 +183,6 @@ ____
 - [Exception handling](https://dev.to/paurakhsharma/flask-rest-api-part-4-exception-handling-5c6a)
 - [Password reset](https://dev.to/paurakhsharma/flask-rest-api-part-5-password-reset-2f2e)
 - [Testing REST API](https://dev.to/paurakhsharma/flask-rest-api-part-6-testing-rest-apis-4lla)
+- [Manage data in Docker](https://docs.docker.com/storage/)
+- [Persistent Databases Using Docker’s Volumes and MongoDB](https://betterprogramming.pub/persistent-databases-using-dockers-volumes-and-mongodb-9ac284c25b39)
+
