@@ -1,4 +1,4 @@
-# Flask-CRUD-API/database/db.py
+# Flask-MongoDB-API/database/db.py
 
 from flask_mongoengine import MongoEngine
 

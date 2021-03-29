@@ -1,4 +1,4 @@
-# Flask-CRUD-API/app.py
+# Flask-MongoDB-API/app.py
 # All-in-one version
 
 from flask import Flask, request, Response

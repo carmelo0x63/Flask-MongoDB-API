@@ -1,4 +1,4 @@
-# Flask-CRUD-API/database/models.py
+# Flask-MongoDB-API/database/models.py
 
 from .db import db
 
