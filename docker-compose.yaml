@@ -4,6 +4,8 @@ services:
   rest-api:
     container_name: api
     build: .
+    environment:
+      - ENV_FILE_LOCATION=.env
     ports:
       - "5000:5000"
     depends_on:
@@ -27,5 +29,5 @@ networks:
 
 volumes:
   db_data:
-#    external: true
+#    external: true  # To be used if the volume is created manually
     name: mongodb_data

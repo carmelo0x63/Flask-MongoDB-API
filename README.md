@@ -68,7 +68,7 @@ $ curl -H "Content-Type: application/json" --data '{"name": "The Shawshank Redem
 ' -X POST http://127.0.0.1:5000/movies
 {"id":"5eb41edac2d65db25809b566"}
 
-$ curl -H "Content-Type: application/json" --data '{"name": "The Godfather ", "casts": ["Marlon Brando", "Al Pacino", "James Caan", "Diane Keaton"], "genres": ["Crime", "Drama"]}' -X POST http://127.0.0.1:5000/movies
+$ curl -H "Content-Type: application/json" --data '{"name": "The Godfather", "casts": ["Marlon Brando", "Al Pacino", "James Caan", "Diane Keaton"], "genres": ["Crime", "Drama"]}' -X POST http://127.0.0.1:5000/movies
 {"id":"5eb41eeac2d65db25809b567"}
 ```
 
